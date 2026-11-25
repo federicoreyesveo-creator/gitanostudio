@@ -130,7 +130,9 @@ ul { list-style: none; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 29px; }
 
 /* Tajo: la frase se parte y se abre a una composición fuera de grilla */
-.cut { position: relative; height: 100svh; overflow: hidden; background: var(--ink); }
+/* 100lvh: en iPhone la sección cubre también el alto que libera la barra del navegador al esconderse
+   (con svh quedaba una franja oscura abajo). El contenido en celular se mantiene dentro del alto chico. */
+.cut { position: relative; height: 100svh; height: 100lvh; overflow: hidden; background: var(--ink); }
 .cut-stage { position: absolute; inset: 0; background: var(--ink); }
 /* Manchas de luz animadas (MeshShader): debajo de las fotos y del texto */
 .cut-shader { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
@@ -154,7 +156,7 @@ ul { list-style: none; }
 .cut-half { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; background: var(--ink); z-index: 3; }
 .cut-top { top: 0; }
 .cut-bottom { bottom: 0; }
-.cut-before { position: absolute; left: 0; right: 0; height: 100svh; display: flex; align-items: center; justify-content: center; padding: 0 var(--gutter); }
+.cut-before { position: absolute; left: 0; right: 0; height: 100svh; height: 100lvh; display: flex; align-items: center; justify-content: center; padding: 0 var(--gutter); }
 .cut-top .cut-before { top: 0; }
 .cut-bottom .cut-before { bottom: 0; }
 /* top lo calcula Cut.tsx para que el tajo pase por el centro de las mayúsculas */
@@ -306,12 +308,17 @@ ul { list-style: none; }
   .header-links a:not(.header-book) { display: none; }
   .header-toggle { display: inline-flex; }
   .header-links { gap: 18px; }
-  .f1 { left: var(--gutter); top: 11vh; width: 56vw; height: 36vh; }
-  .f2 { left: auto; right: var(--gutter); top: 19vh; width: 32vw; height: 22vh; }
-  /* dos fotos bajo el texto para que no quede tanto aire */
-  .f3 { right: auto; left: var(--gutter); top: auto; bottom: 4vh; width: 46vw; height: 21vh; }
-  .f4 { left: auto; right: var(--gutter); top: auto; bottom: 9vh; width: 38vw; height: 17vh; }
-  .cut-copy { left: var(--gutter); right: var(--gutter); top: 52vh; transform: none; }
+  /* Celular: grilla en vez de posiciones en vh. En iPhone los vh cambian con la barra del
+     navegador y las fotos de abajo se montaban sobre el texto; con la grilla cada cosa
+     tiene su fila: fotos arriba, texto, fotos abajo. */
+  .cut-stage { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: minmax(0, 1.15fr) auto minmax(0, .85fr);
+    column-gap: 14px; row-gap: 22px; padding: 84px var(--gutter) calc(100lvh - 100svh + 20px); }
+  .cut-frame { position: relative; inset: auto; width: auto; height: 100%; min-height: 0; }
+  .f1 { grid-area: 1 / 1; }
+  .f2 { grid-area: 1 / 2; height: 70%; align-self: center; }
+  .f3 { grid-area: 3 / 1; }
+  .f4 { grid-area: 3 / 2; height: 78%; align-self: center; }
+  .cut-copy { position: relative; grid-area: 2 / 1 / 3 / 3; left: auto; right: auto; top: auto; transform: none; }
   .cut-caption { margin-top: 18px; }
   .menu-title { white-space: normal; }
 

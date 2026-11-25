@@ -27,15 +27,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="es-MX"
       className={`${display.variable} ${sans.variable} ${mono.variable} ${serif.variable}`}
     >
-      <head>
-        {/* Diagnóstico temporal (ver components/DebugPanel.tsx): guarda errores de JS desde el arranque. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "window.__errs=[];addEventListener('error',function(e){__errs.push(e.message+' @'+(e.filename||'').split('/').pop()+':'+e.lineno)});addEventListener('unhandledrejection',function(e){__errs.push('promise: '+(e.reason&&e.reason.message||e.reason))});",
-          }}
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

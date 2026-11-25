@@ -78,8 +78,9 @@ export default function Cut({ before, after, caption, imgs, alts, id }: Props) {
         .from(q(".cut-caption"), { opacity: 0, y: 12, duration: 0.4 }, "<+0.2")
         // Mientras sigue fijo, las fotos chicas derivan a distinta velocidad (profundidad).
         .to(q(".f2"), { yPercent: -14, duration: 1.2, ease: "none" }, ">")
-        .to(q(".f3"), { yPercent: -24, duration: 1.2, ease: "none" }, "<")
-        .to(q(".f4"), { yPercent: -32, duration: 1.2, ease: "none" }, "<");
+        // En celular las fotos de abajo apenas se mueven para no montarse sobre el texto.
+        .to(q(".f3"), { yPercent: () => (window.innerWidth > 900 ? -24 : -4), duration: 1.2, ease: "none" }, "<")
+        .to(q(".f4"), { yPercent: () => (window.innerWidth > 900 ? -32 : -6), duration: 1.2, ease: "none" }, "<");
     });
     return () => mm.revert();
   }, []);
