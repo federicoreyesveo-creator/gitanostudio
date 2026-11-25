@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+next-env.d.ts
+tsconfig.tsbuildinfo
+.env*
+.claude/
+
+# Material fuente del cliente (originales pesados) y maquetas de referencia
+imagenes/
+mockups/
