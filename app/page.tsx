@@ -7,6 +7,7 @@ import Artist from "@/components/Artist";
 import Menu from "@/components/Menu";
 import Faq from "@/components/Faq";
 import Visit from "@/components/Visit";
+import DebugPanel from "@/components/DebugPanel";
 import { ADDRESS, FAQS, GEO, HOURS, INSTAGRAM_URL, MAPS_URL } from "@/lib/data";
 
 // Datos estructurados para Google (negocio local).
@@ -83,6 +84,7 @@ export default function Home() {
         <Faq />
         <Visit />
       </main>
+      <DebugPanel />
     </>
   );
 }
