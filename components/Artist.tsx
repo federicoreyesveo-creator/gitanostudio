@@ -27,10 +27,10 @@ export default function Artist() {
           );
         });
         // Stack: Dayner se fija arriba y queda quieto un tramo (el margen de .menu) para leerlo;
-        // recién después Servicios sube y lo tapa, mientras Dayner se hunde y se apaga.
+        // recién después Reseñas sube y lo tapa, mientras Dayner se hunde y se apaga.
         const sec = root.current!;
         // Por elemento y no por selector: el contexto de gsap busca selectores solo dentro de esta sección.
-        const next = document.getElementById("servicios");
+        const next = document.getElementById("resenas");
         ScrollTrigger.create({
           trigger: sec,
           start: () => (sec.offsetHeight > window.innerHeight ? "bottom bottom" : "top top"),

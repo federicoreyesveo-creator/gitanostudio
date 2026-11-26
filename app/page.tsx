@@ -1,5 +1,6 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import { Header } from "@/components/Nav";
+import Loader from "@/components/Loader";
 import Hero from "@/components/Hero";
 import Cut from "@/components/Cut";
 import Collection from "@/components/Collection";
@@ -22,6 +23,7 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <SmoothScroll />
+      <Loader />
       <div className="grain" aria-hidden />
       <Header />
       <main>
@@ -49,8 +51,8 @@ export default function Home() {
         />
         <Collection />
         <Artist />
-        <Menu />
         <Reviews />
+        <Menu />
         <Faq />
         <Visit />
       </main>

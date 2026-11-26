@@ -213,7 +213,7 @@ ul { list-style: none; }
 
 /* Carta: color metal cepillado, como la carta impresa */
 /* margin-top: tramo en que Dayner queda quieto arriba antes de que Servicios lo tape. */
-.menu { position: relative; z-index: 2; margin-top: 45vh; color: #fff; box-shadow: 0 -30px 60px rgba(0,0,0,.45); padding: 123px var(--gutter) 76px;
+.menu { position: relative; z-index: 2; color: #fff; box-shadow: 0 -30px 60px rgba(0,0,0,.45); padding: 123px var(--gutter) 76px;
   background:
     linear-gradient(180deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.16) 22%, rgba(255,255,255,0) 27%),
     linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(255,255,255,.1) 63%, rgba(255,255,255,0) 68%),
@@ -349,7 +349,7 @@ ul { list-style: none; }
 }
 
 /* Sin animaciones no hay pin: el tramo de pausa sobra. */
-@media (prefers-reduced-motion: reduce) { .menu { margin-top: 0; } }
+@media (prefers-reduced-motion: reduce) { .reviews { margin-top: 0; } }
 
 /* Copy SEO/AEO (nov 2026): textos nuevos */
 h1.hero-kicker { font-size: var(--t-1); }
@@ -371,8 +371,9 @@ h1.hero-kicker { font-size: var(--t-1); }
 .arrow-out { display: inline-block; width: .7em; height: .7em; margin-left: .25em; vertical-align: .05em; }
 .header.on-grey { mix-blend-mode: normal; color: #fff; } /* sobre Servicios (gris medio): blanco, como el texto de esa sección */
 
-/* Reseñas de Google: después de Servicios, retícula editorial sobre negro */
-.reviews { position: relative; z-index: 2; background: var(--ink); padding: 123px var(--gutter) 110px; }
+/* Reseñas de Google: después de Dayner, retícula editorial sobre negro.
+   margin-top: tramo en que Dayner queda quieto arriba antes de que Reseñas lo tape. */
+.reviews { position: relative; z-index: 2; margin-top: 45vh; background: var(--ink); border-top: 1px solid var(--line); box-shadow: 0 -30px 60px rgba(0,0,0,.6); padding: 123px var(--gutter) 110px; }
 .reviews-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 29px; padding-bottom: 47px; }
 .reviews-kicker { color: var(--muted); }
 .reviews-score { font-size: var(--t5); line-height: .8; margin-top: 18px; overflow: hidden; padding-bottom: .02em; }
@@ -403,3 +404,23 @@ h1.hero-kicker { font-size: var(--t-1); }
   .review blockquote { font-size: 30px; }
   .review:last-child { margin-right: var(--gutter); }
 }
+
+/* Pantalla de carga "el tajo": dos mitades con el mismo contenido; una línea las corta y se abren */
+.no-scroll, .no-scroll body { overflow: hidden; }
+.ld { position: fixed; inset: 0; z-index: 200; pointer-events: none; animation: ld-safety .4s 7s forwards; }
+.ld-half { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; background: var(--ink); will-change: transform; }
+.ld-top { top: 0; }
+.ld-bottom { bottom: 0; }
+.ld-face { position: absolute; left: 0; right: 0; height: 100vh; height: 100svh; display: grid; place-items: center; }
+.ld-top .ld-face { top: 0; }
+.ld-bottom .ld-face { bottom: 0; }
+.ld-logo { display: flex; flex-direction: column; align-items: center; color: var(--bone); }
+.ld-word { font-family: var(--f-serif); font-size: clamp(72px, 11vw, 170px); line-height: .8; letter-spacing: -0.01em; }
+.ld-sub { display: flex; align-items: center; gap: .9em; font-family: var(--f-sans); font-size: clamp(10px, 1vw, 14px); font-weight: 500; letter-spacing: .6em; text-transform: uppercase; margin-top: .9em; padding-left: .6em; }
+.ld-sub::before, .ld-sub::after { content: ""; width: 2.6em; height: 1px; background: currentColor; }
+.ld-count, .ld-place { position: absolute; bottom: 28px; color: var(--muted); }
+.ld-count { left: var(--gutter); color: var(--bone); font-size: 13px; }
+.ld-place { right: var(--gutter); }
+.ld-cut { position: absolute; top: 50%; left: 0; right: 0; height: 1px; margin-top: -.5px; background: var(--bone); box-shadow: 0 0 12px rgba(255,255,255,.8); transform: scaleX(0); transform-origin: left center; }
+@keyframes ld-safety { to { opacity: 0; visibility: hidden; } }
+@media (max-width: 640px) { .ld-place { display: none; } }

@@ -79,7 +79,7 @@ export default function Reviews() {
         <a className="review review-more" href={RATING.url} target="_blank" rel="noopener">
           <span className="mono review-no">+{RATING.count - REVIEWS.length} reseñas más</span>
           <span className="review-more-text">
-            Lee las {RATING.count} en Google <ArrowOut />
+            Lee todas las reseñas en Google <ArrowOut />
           </span>
         </a>
       </div>

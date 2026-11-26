@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FRESHA_URL, HERO_IMG, WHATSAPP_URL } from "@/lib/data";
 import { Chevron } from "./Ui";
+import { onReady } from "./Loader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,14 +55,18 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(".hero-img", { scale: 1.18 }, { scale: 1.04, duration: 2.4, ease: "expo.out" });
-        gsap.from(".hero-title .line > span", { yPercent: 110, duration: 1.3, ease: "expo.out", stagger: 0.1, delay: 0.25 });
-        gsap.from(".hero-meta > *, .hero-kicker", { opacity: 0, y: 12, duration: 0.9, ease: "power3.out", stagger: 0.08, delay: 0.8 });
+        // Entrada: queda en pausa hasta que se abre la pantalla de carga.
+        const intro = gsap.timeline({ paused: true })
+          .fromTo(".hero-img", { scale: 1.18 }, { scale: 1.04, duration: 2.4, ease: "expo.out" }, 0)
+          .from(".hero-title .line > span", { yPercent: 110, duration: 1.3, ease: "expo.out", stagger: 0.1 }, 0.25)
+          .from(".hero-meta > *, .hero-kicker", { opacity: 0, y: 12, duration: 0.9, ease: "power3.out", stagger: 0.08 }, 0.8);
+        const off = onReady(() => intro.play());
 
         // Al bajar: la foto se hunde y el texto se va antes que ella.
         const st = { trigger: el, start: "top top", end: "bottom top", scrub: true };
         gsap.to(".hero-img-wrap", { yPercent: 18, ease: "none", scrollTrigger: st });
         gsap.to(".hero-content", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
+        return off;
       });
     }, el);
     return () => {

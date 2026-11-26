@@ -13,6 +13,11 @@ export default function SmoothScroll() {
 
     const lenis = new Lenis({ lerp: 0.1, anchors: { offset: 0 } });
     lenis.on("scroll", ScrollTrigger.update);
+    // Quieto mientras está la pantalla de carga.
+    if (!window.__gsReady) {
+      lenis.stop();
+      window.addEventListener("gs:ready", () => lenis.start(), { once: true });
+    }
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
