@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { HERO_IMG, PIECES } from "@/lib/data";
 
 declare global {
   interface Window {
@@ -19,28 +20,20 @@ export function onReady(fn: () => void) {
   return () => window.removeEventListener("gs:ready", fn);
 }
 
-const MIN_MS = 1900; // que el contador llegue a leerse aunque la página cargue al instante
-
-// Lo que se ve en la pantalla de carga. Se dibuja dos veces (una por mitad) para poder partirla.
-function Face() {
-  return (
-    <div className="ld-face">
-      <div className="ld-logo">
-        <span className="ld-word">gitano</span>
-        <span className="ld-sub">studio</span>
-      </div>
-      <span className="mono ld-count">
-        000
-      </span>
-      <span className="mono ld-place">Barbería de autor · Mérida</span>
-    </div>
-  );
-}
+// Fotos del pase rápido: los cortes, y al final la foto de portada (la que queda al abrir).
+const SHOTS = [
+  ...PIECES.map((p) => p.img),
+  "/img/cut/gitano-studio-crop-fade-barba-linea-merida.webp",
+  "/img/cut/gitano-studio-corte-shag-mujer-capas-merida.webp",
+  "/img/cut/gitano-studio-taper-fade-rizado-merida.webp",
+  "/img/cut/gitano-studio-buzz-cut-mujer-fade-merida.webp",
+];
+const STEP = 0.13; // segundos por foto
 
 /**
- * Pantalla de carga "el tajo": el logo y un contador que sigue la carga real (foto de portada + tipografías).
- * Al llegar a 100, una línea corta la pantalla por la mitad y las dos mitades se abren
- * (arrancan lento y salen de golpe). Si algo falla, el CSS la esconde sola a los 7 s.
+ * Pantalla de carga: aparece el logo, en el medio pasan los cortes uno tras otro (rapidito)
+ * y el último es la foto de portada. Esa ventana se abre hasta llenar la pantalla y ya estamos en la home.
+ * El contador sigue la carga real (fotos + tipografías). Si algo falla, el CSS la esconde sola a los 8 s.
  */
 export default function Loader() {
   const root = useRef<HTMLDivElement>(null);
@@ -48,64 +41,97 @@ export default function Loader() {
 
   useEffect(() => {
     const el = root.current!;
+    const q = gsap.utils.selector(el);
     const html = document.documentElement;
     html.classList.add("no-scroll");
     window.scrollTo(0, 0);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // El contador corre hacia el progreso real, sin saltos.
-    const shown = { v: 0 };
-    let target = 0;
-    const paint = () => {
-      const txt = String(Math.round(shown.v)).padStart(3, "0");
-      el.querySelectorAll(".ld-count").forEach((c) => (c.textContent = txt));
+    const finish = () => {
+      html.classList.remove("no-scroll");
+      window.__gsReady = true;
+      window.dispatchEvent(new Event("gs:ready"));
     };
+
+    // Carga real: tipografías + cada foto del pase + la portada.
+    const load = (src: string) =>
+      new Promise<void>((r) => {
+        const im = new Image();
+        im.onload = im.onerror = () => r();
+        im.src = src;
+      });
+    const tasks = [document.fonts.ready, ...SHOTS.map(load), load(HERO_IMG)];
+    let loaded = 0;
+    tasks.forEach((t) => t.then(() => loaded++));
+    const all = Promise.all(tasks);
+
+    if (reduced) {
+      all.then(() => gsap.to(el, { opacity: 0, duration: 0.5, onStart: finish, onComplete: () => setGone(true) }));
+      return () => html.classList.remove("no-scroll");
+    }
+
+    // Contador: avanza con lo que va cargando y con el pase de fotos, sin saltos.
+    let shown = 0;
+    let shot = 0;
+    const counters = q(".ld-count");
     const tick = () => {
-      shown.v += (target - shown.v) * 0.12;
-      if (target - shown.v < 0.5) shown.v = target;
-      paint();
+      const target = Math.min((loaded / tasks.length) * 100, ((shot + 1) / (SHOTS.length + 1)) * 100);
+      shown += (target - shown) * 0.15;
+      if (target - shown < 0.5) shown = target;
+      counters.forEach((c) => (c.textContent = String(Math.round(shown)).padStart(3, "0")));
     };
     gsap.ticker.add(tick);
 
-    const img = document.querySelector<HTMLImageElement>(".hero-img");
-    const tasks: Promise<unknown>[] = [
-      document.fonts.ready,
-      img && !img.complete ? new Promise((r) => { img.addEventListener("load", r, { once: true }); img.addEventListener("error", r, { once: true }); }) : Promise.resolve(),
-      new Promise((r) => setTimeout(r, MIN_MS)),
-    ];
-    let done = 0;
-    tasks.forEach((t) => t.then(() => (target = Math.max(target, (++done / tasks.length) * 90))));
-    // Mientras espera, avanza solo un poco para que nunca quede quieto.
-    const creep = gsap.to({}, { duration: MIN_MS / 1000, onUpdate() { target = Math.max(target, this.progress() * 80); } });
+    const imgs = q(".ld-frame img");
+    const show = (i: number) => imgs.forEach((im, k) => ((im as HTMLElement).style.visibility = k === i ? "visible" : "hidden"));
+    show(0);
+
+    // Ventana del medio, en coordenadas de pantalla (para abrirla después sobre la foto de portada).
+    const win = () => {
+      const r = q(".ld-frame")[0].getBoundingClientRect();
+      return `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px)`;
+    };
 
     let alive = true;
-    Promise.all(tasks).then(() => {
-      if (!alive) return;
-      target = 100;
-      const finish = () => {
-        html.classList.remove("no-scroll");
-        window.__gsReady = true;
-        window.dispatchEvent(new Event("gs:ready"));
+    let timer = 0;
+    const intro = gsap
+      .timeline()
+      .from(q(".ld-logo > span"), { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.08 })
+      .from(q(".ld-count, .ld-place"), { opacity: 0, duration: 0.5 }, "<0.2")
+      .fromTo(q(".ld-frame"), { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.6, ease: "expo.inOut" }, "<0.15");
+
+    // Pase rápido: una foto cada STEP; da al menos una vuelta y sigue girando hasta que todo cargó.
+    let ready = false;
+    all.then(() => (ready = true));
+    intro.then(() => {
+      const next = () => {
+        if (!alive) return;
+        if (shot >= SHOTS.length - 1 && ready) return open();
+        shot = (shot + 1) % SHOTS.length;
+        show(shot);
+        timer = window.setTimeout(next, STEP * 1000);
       };
-      if (reduced) {
-        gsap.to(el, { opacity: 0, duration: 0.5, delay: 0.3, onStart: finish, onComplete: () => setGone(true) });
-        return;
-      }
-      const q = gsap.utils.selector(el);
-      gsap
-        .timeline({ delay: 0.35, onComplete: () => setGone(true) })
-        .to(q(".ld-face"), { opacity: 0.55, duration: 0.3, ease: "power1.out" })
-        .fromTo(q(".ld-cut"), { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "expo.inOut" }, "<")
-        // Las mitades se abren: arrancan lento y salen de golpe.
-        .to(q(".ld-top"), { yPercent: -100, duration: 0.95, ease: "expo.in" }, "+=0.12")
-        .to(q(".ld-bottom"), { yPercent: 100, duration: 0.95, ease: "expo.in" }, "<")
-        .to(q(".ld-cut"), { opacity: 0, duration: 0.25 }, "<0.55")
-        .call(finish, [], "<0.15"); // la portada arranca mientras se abre
+      timer = window.setTimeout(next, STEP * 1000);
     });
+
+    // Último corte → la foto de portada en la misma ventana → la ventana se abre a pantalla completa.
+    const open = () => {
+      shot = SHOTS.length;
+      const hero = q(".ld-hero")[0];
+      gsap
+        .timeline({ onComplete: () => setGone(true) })
+        .set(hero, { clipPath: win(), visibility: "visible" })
+        .set(q(".ld-frame"), { visibility: "hidden" })
+        .to(hero, { clipPath: "inset(0px 0px 0px 0px)", duration: 1.05, ease: "expo.inOut" }, "+=0.28")
+        .to(q(".ld-logo, .ld-count, .ld-place"), { opacity: 0, duration: 0.35, ease: "power2.in" }, "<")
+        .call(finish, [], "<0.75") // la portada arranca cuando la ventana ya casi llenó la pantalla
+        .to(el, { opacity: 0, duration: 0.35, ease: "power1.out" });
+    };
 
     return () => {
       alive = false;
-      creep.kill();
+      clearTimeout(timer);
+      intro.kill();
       gsap.ticker.remove(tick);
       html.classList.remove("no-scroll");
     };
@@ -114,13 +140,20 @@ export default function Loader() {
   if (gone) return null;
   return (
     <div ref={root} className="ld" aria-hidden>
-      <div className="ld-half ld-top">
-        <Face />
+      <div className="ld-frame">
+        {SHOTS.map((src, i) => (
+          <img key={src} src={src} alt="" decoding="async" style={{ visibility: i === 0 ? "visible" : "hidden" }} />
+        ))}
       </div>
-      <div className="ld-half ld-bottom">
-        <Face />
+      <div className="ld-hero">
+        <img src={HERO_IMG} alt="" />
       </div>
-      <i className="ld-cut" />
+      <div className="ld-logo">
+        <span className="ld-word">gitano</span>
+        <span className="ld-sub">studio</span>
+      </div>
+      <span className="mono ld-count">000</span>
+      <span className="mono ld-place">Barbería de autor · Mérida</span>
     </div>
   );
 }
