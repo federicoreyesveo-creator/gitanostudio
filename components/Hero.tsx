@@ -56,8 +56,9 @@ export default function Hero() {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         // Entrada: queda en pausa hasta que se abre la pantalla de carga.
+        // La foto ya llega quieta (la abre el loader a este mismo tamaño): solo entran los textos.
+        gsap.set(".hero-img", { scale: 1.04 });
         const intro = gsap.timeline({ paused: true })
-          .fromTo(".hero-img", { scale: 1.18 }, { scale: 1.04, duration: 2.4, ease: "expo.out" }, 0)
           .from(".hero-title .line > span", { yPercent: 110, duration: 1.3, ease: "expo.out", stagger: 0.1 }, 0.25)
           .from(".hero-meta > *, .hero-kicker", { opacity: 0, y: 12, duration: 0.9, ease: "power3.out", stagger: 0.08 }, 0.8);
         const off = onReady(() => intro.play());
