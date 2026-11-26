@@ -17,10 +17,17 @@ const LINKS = [
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [onGrey, setOnGrey] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    // Sobre el gris medio de Servicios la inversión da gris sobre gris: ahí la barra va en blanco.
+    const grey = document.getElementById("servicios");
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      const r = grey?.getBoundingClientRect();
+      setOnGrey(!!r && r.top < 60 && r.bottom > 30);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -40,7 +47,7 @@ export function Header() {
 
   return (
     <>
-      <header className={`header ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}>
+      <header className={`header ${scrolled ? "is-scrolled" : ""} ${onGrey && !open ? "on-grey" : ""} ${open ? "is-open" : ""}`}>
         <a href="#inicio" className="logo" aria-label="Gitano Studio, inicio" onClick={() => setOpen(false)}>
           <span className="logo-word">gitano</span>
           <span className="logo-sub">studio</span>

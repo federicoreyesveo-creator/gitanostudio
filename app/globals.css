@@ -369,3 +369,4 @@ h1.hero-kicker { font-size: var(--t-1); }
 .footer-row .footer-info span { white-space: normal; } /* textos de pie más largos: que bajen de renglón */
 .visit-kicker { color: var(--muted); margin-bottom: 18px; }
 .arrow-out { display: inline-block; width: .7em; height: .7em; margin-left: .25em; vertical-align: .05em; }
+.header.on-grey { mix-blend-mode: normal; color: #fff; } /* sobre Servicios (gris medio): blanco, como el texto de esa sección */
