@@ -48,8 +48,10 @@ export default function Visit() {
     <section className="visit" id="visita">
       <Marquee items={[(status?.text ?? "Mar–Sáb 10:00–19:30").toUpperCase(), "CALLE 31", "MÉRIDA"]} />
       <div className="visit-title">
-        <p className="mono visit-kicker">Visita · Gitano Studio, Mérida</p>
-        <h2 className="display display-5">Calle 31, México Oriente.</h2>
+        <h2 className="mono visit-kicker">Visita · Gitano Studio, Mérida</h2>
+        <p className="display display-5" aria-hidden>
+          Visita
+        </p>
       </div>
 
       <div className="visit-grid">

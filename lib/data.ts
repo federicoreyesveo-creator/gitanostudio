@@ -103,7 +103,7 @@ export const HOURS: Record<number, [number, number] | null> = {
 export type Faq = { q: string; a: string };
 export const FAQS: Faq[] = [
   { q: "¿Cuánto cuesta un corte de cabello en Gitano Studio?", a: "Un corte personalizado en Gitano Studio cuesta $350 MXN y el corte especializado a tijera, $400 MXN. Corte y barba sale en $500 y la Experiencia Gitano completa, en $650. Pagas directo en el estudio." },
-  { q: "¿Necesito cita o atienden sin cita?", a: "Gitano Studio atiende solo con cita, para que cada cliente tenga su tiempo completo, sin esperas. Agenda en línea por Fresha o escríbenos por WhatsApp." },
+  { q: "¿Necesito cita o atienden sin cita?", a: "Gitano Studio atiende solo con cita, para que cada cliente tenga su tiempo completo, sin esperas. Agenda en línea o escríbenos por WhatsApp." },
   { q: "¿Qué horario tiene Gitano Studio?", a: "Gitano Studio abre de martes a sábado de 10:00 a 19:30 y los domingos de 12:00 a 18:00. Los lunes cerramos." },
   { q: "¿Dónde está la barbería?", a: "Gitano Studio está en la Calle 31, Circuito Colonias, colonia México Oriente, en Mérida, Yucatán." },
   { q: "¿Hacen cortes de mujer?", a: "Sí. Gitano Studio hace cortes cortos de mujer desde $450 MXN, como el afro esculpido, con el mismo trabajo de tijera y detalle que cualquier corte de la casa." },
@@ -111,7 +111,7 @@ export const FAQS: Faq[] = [
   { q: "¿Cuánto dura una cita?", a: "Una cita en Gitano Studio dura entre 45 y 60 minutos, según el servicio. Un fade con textura o un crop texturizado toman unos 45 minutos; los servicios con barba, alrededor de una hora." },
   { q: "¿Hacen fades y degradados?", a: "Sí. El fade con textura, el high fade, el taper y el crop texturizado están entre los cortes que más se trabajan en Gitano Studio. Un corte personalizado con máquina y tijera cuesta $350 MXN." },
   { q: "¿Qué es una barbería de autor?", a: "Una barbería de autor es un estudio donde el barbero diseña cada corte según tu cabeza, tu tipo de cabello y tu estilo, en lugar de repetir cortes de catálogo. En Gitano Studio cada cita empieza con una asesoría con Dayner." },
-  { q: "¿Cómo agendo una cita?", a: "Agenda en línea por Fresha desde el botón “Aparta tu lugar” o mándanos un WhatsApp. Eliges servicio, día y hora, y ya quedó." },
+  { q: "¿Cómo agendo una cita?", a: "Agenda en línea desde el botón “Aparta tu lugar” o mándanos un WhatsApp. Eliges servicio, día y hora, y ya quedó." },
   { q: "¿Qué formas de pago aceptan?", a: "El pago se hace en el estudio, al terminar." },
 ];
 

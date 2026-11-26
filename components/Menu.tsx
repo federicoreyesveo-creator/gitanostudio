@@ -93,7 +93,7 @@ export default function Menu() {
 
       <p className="menu-foot mono">
         <span>Precios en MXN · Pagas en el estudio</span>
-        <span>Agenda en línea por Fresha o por WhatsApp</span>
+        <span>Agenda en línea o por WhatsApp</span>
       </p>
     </section>
   );
