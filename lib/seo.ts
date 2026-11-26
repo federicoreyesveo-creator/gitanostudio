@@ -1,7 +1,7 @@
-import { ADDRESS, FAQS, FRESHA_URL, GEO, HOURS, INSTAGRAM_URL, MAPS_URL, SERVICES } from "./data";
+import { ADDRESS, PHONE, FAQS, FRESHA_URL, GEO, HOURS, INSTAGRAM_URL, MAPS_URL, SERVICES } from "./data";
 
 // Datos estructurados (schema.org). HairSalon es el tipo que corresponde a una barbería.
-// TODO: sumar url (dominio final), telephone (WhatsApp real) y postalCode cuando estén.
+// TODO: sumar url cuando esté el dominio final.
 
 const DAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const hhmm = (h: number) => `${String(Math.floor(h)).padStart(2, "0")}:${h % 1 ? "30" : "00"}`;
@@ -40,8 +40,10 @@ export function businessLd(opts: { url?: string; image?: string } = {}) {
       streetAddress: `${ADDRESS.line1}, México Oriente`,
       addressLocality: "Mérida",
       addressRegion: "Yucatán",
+      postalCode: "97125",
       addressCountry: "MX",
     },
+    telephone: `+52 ${PHONE}`,
     geo: { "@type": "GeoCoordinates", latitude: GEO.lat, longitude: GEO.lng },
     hasMap: MAPS_URL,
     openingHoursSpecification: openingHours(),

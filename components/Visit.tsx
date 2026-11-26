@@ -56,7 +56,7 @@ export default function Visit() {
 
       <div className="visit-grid">
         <div>
-          <p className="lead">Calle 31, Circuito Colonias, México Oriente, Mérida, Yuc.</p>
+          <p className="lead">Calle 31, Circuito Colonias, México Oriente, 97125 Mérida, Yuc.</p>
           {status && (
             <p className={`status mono ${status.open ? "is-open" : ""}`}>
               <i /> {status.text}

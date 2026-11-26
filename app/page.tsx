@@ -5,6 +5,7 @@ import Cut from "@/components/Cut";
 import Collection from "@/components/Collection";
 import Artist from "@/components/Artist";
 import Menu from "@/components/Menu";
+import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import Visit from "@/components/Visit";
 import { HERO_IMG } from "@/lib/data";
@@ -49,6 +50,7 @@ export default function Home() {
         <Collection />
         <Artist />
         <Menu />
+        <Reviews />
         <Faq />
         <Visit />
       </main>
