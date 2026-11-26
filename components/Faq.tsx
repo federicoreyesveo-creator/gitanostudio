@@ -41,10 +41,10 @@ export default function Faq() {
   return (
     <section ref={root} className="faq" id="preguntas">
       <div className="faq-head">
-        <p className="mono faq-kicker">Preguntas frecuentes</p>
-        <h2 className="display faq-title">
+        <h2 className="mono faq-kicker">Preguntas frecuentes sobre Gitano Studio</h2>
+        <p className="display faq-title">
           <span>Lo que nos preguntan</span> <span>antes de sentarse.</span>
-        </h2>
+        </p>
       </div>
 
       <div className="faq-list">
@@ -61,7 +61,7 @@ export default function Faq() {
                   id={`faq-q-${i}`}
                   onClick={() => setOpen(isOpen ? null : i)}
                 >
-                  <span className="mono faq-no">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="mono faq-no" data-no={String(i + 1).padStart(2, "0")} aria-hidden />
                   <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" aria-hidden />
                 </button>

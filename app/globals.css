@@ -351,3 +351,20 @@ ul { list-style: none; }
 
 /* Sin animaciones no hay pin: el tramo de pausa sobra. */
 @media (prefers-reduced-motion: reduce) { .menu { margin-top: 0; } }
+
+/* Copy SEO/AEO (nov 2026): textos nuevos */
+h1.hero-kicker { font-size: var(--t-1); }
+.hero-sub { margin-top: 18px; color: var(--bone-2); font-size: 15px; line-height: 1.5; max-width: 34em; }
+.collection-sub { margin-top: 14px; color: var(--bone-2); max-width: 34em; }
+.piece-line { margin-top: 6px; color: var(--bone-2); font-size: 13px; line-height: 1.4; }
+.bio p.artist-title, .bio p.bio-lead { color: inherit; }
+.bio-h2 { font-family: var(--f-sans); font-size: 15px; font-weight: 600; line-height: 1.3; margin-top: 8px; color: var(--bone); }
+.menu-sub { margin-top: 14px; color: rgba(255,255,255,.85); max-width: 34em; }
+.visit-body { margin-top: 14px; color: var(--bone-2); max-width: 30em; }
+.footer-entity { color: var(--muted); font-size: 13px; line-height: 1.5; max-width: 52em; margin: 0 0 18px; }
+.cut-caption { max-width: 25em; }
+.cut-caption span { white-space: normal !important; }
+.cut-caption span + span { margin-top: 8px; }
+.faq-no::before { content: attr(data-no); } /* el número no entra en el texto del H3 */
+.menu-item-name small.mono { text-transform: none; letter-spacing: 0; font-family: var(--f-sans); font-size: 14px; } /* descripciones largas: legibles */
+.footer-row .footer-info span { white-space: normal; } /* textos de pie más largos: que bajen de renglón */

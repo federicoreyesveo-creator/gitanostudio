@@ -8,7 +8,7 @@ import { Chevron } from "./Ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TITLE = "Haz tuyo tu estilo.";
+const TITLE = "Hazlo tuyo.";
 
 export default function Menu() {
   const root = useRef<HTMLElement>(null);
@@ -50,17 +50,18 @@ export default function Menu() {
     <section ref={root} className="menu" id="servicios">
       <div className="menu-head">
         <div>
-          <p className="mono menu-kicker">Servicios · Agenda abierta</p>
-          <h2 className="display display-4 menu-title">
+          <h2 className="mono menu-kicker">Servicios y precios de barbería en Mérida</h2>
+          <p className="display display-4 menu-title">
             {TITLE.split(" ").map((w, i) => (
               <span className="w" key={i}>
-                <span>{w}</span>
+                <span>{w}</span>{" "}
               </span>
             ))}
-          </h2>
+          </p>
+          <p className="menu-sub">Precios claros, en pesos y sin letras chiquitas. Pagas en el estudio.</p>
         </div>
         <a href={FRESHA_URL} target="_blank" rel="noopener" className="pill">
-          Agendar mi lugar <Chevron />
+          Aparta tu lugar <Chevron />
         </a>
       </div>
 
@@ -91,8 +92,8 @@ export default function Menu() {
       </div>
 
       <p className="menu-foot mono">
-        <span>Precios en MXN · pago en el estudio</span>
-        <span>Reservas vía Fresha</span>
+        <span>Precios en MXN · Pagas en el estudio</span>
+        <span>Agenda en línea por Fresha o por WhatsApp</span>
       </p>
     </section>
   );

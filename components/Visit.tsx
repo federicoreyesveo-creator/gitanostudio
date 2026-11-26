@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ADDRESS, FRESHA_URL, HOURS, INSTAGRAM_URL, MAPS_EMBED, MAPS_URL, WHATSAPP_URL } from "@/lib/data";
+import { ADDRESS, ENTITY, FRESHA_URL, HOURS, INSTAGRAM_URL, MAPS_EMBED, MAPS_URL, WHATSAPP_URL } from "@/lib/data";
 import { Chevron, Marquee } from "./Ui";
 
 const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
@@ -47,11 +47,14 @@ export default function Visit() {
   return (
     <section className="visit" id="visita">
       <Marquee items={[(status?.text ?? "Mar–Sáb 10:00–19:30").toUpperCase(), "CALLE 31", "MÉRIDA"]} />
-      <h2 className="display display-5 visit-title">Visita</h2>
+      <p className="display display-5 visit-title" aria-hidden>
+        Visita
+      </p>
 
       <div className="visit-grid">
         <div>
-          <p className="lead">Calle 31. Te esperamos.</p>
+          <h2 className="lead">Visita Gitano Studio en la Calle 31, México Oriente</h2>
+          <p className="visit-body">Calle 31, Circuito Colonias, México Oriente, Mérida, Yuc. Llegas con cita, sales con oficio.</p>
           {status && (
             <p className={`status mono ${status.open ? "is-open" : ""}`}>
               <i /> {status.text}
@@ -78,7 +81,7 @@ export default function Visit() {
             {ADDRESS.line2}
           </address>
           <a href={FRESHA_URL} target="_blank" rel="noopener" className="pill">
-            Agendar <Chevron />
+            Aparta tu lugar <Chevron />
           </a>
           <div className="visit-links mono">
             <a href={MAPS_URL} target="_blank" rel="noopener">Cómo llegar ↗</a>
@@ -102,12 +105,14 @@ export default function Visit() {
         <div className="footer-mark">
           <img src="/img/carita.png" alt="Gitano Studio" width={684} height={642} />
         </div>
+        <p className="footer-entity">{ENTITY}</p>
         <div className="footer-row mono">
           {/* En desktop los tres datos van en fila; en celular, apilados a la izquierda con el crédito a la derecha. */}
           <div className="footer-info">
-            <span>Gitano Studio</span>
+            <span>Gitano Studio · Barbería de autor en Mérida, Yucatán</span>
+            <span>Mar–Sáb 10:00–19:30 · Dom 12:00–18:00</span>
             <span>Estado del Arte</span>
-            <span>Mérida, Yuc. © 2026</span>
+            <span>© 2026</span>
           </div>
           <a href="https://www.almabruta.studio" target="_blank" rel="noopener" className="footer-credit">
             Diseñado por Alma Bruta

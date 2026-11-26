@@ -106,7 +106,8 @@ export default function Collection() {
   return (
     <section ref={root} className="collection" id="obra">
       <div className="collection-head">
-        <h2 className="display collection-title">Obra: cortes de autor en Mérida.</h2>
+        <h2 className="display collection-title">Cortes de autor en Mérida</h2>
+        <p className="collection-sub">Fades, texturas, rizos y barba. Así se ve el oficio cuando nadie tiene prisa.</p>
       </div>
 
       <div ref={grid} className="collection-grid">
@@ -119,6 +120,7 @@ export default function Collection() {
             <div className="piece-cap">
               <p className="piece-label mono">{p.detail}</p>
               <h3 className="piece-name">{p.name}</h3>
+              <p className="piece-line">{p.line}</p>
             </div>
           </article>
         ))}

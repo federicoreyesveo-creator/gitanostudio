@@ -14,6 +14,8 @@ type Props = {
   caption: string[];
   /** Collage: [principal, arriba a la derecha, sangrando por el borde derecho, chica montada sobre la principal] */
   imgs: string[];
+  /** Comienzo del H2 que no se ve como título (la frase del tajo), para que se lea completo */
+  heading?: string;
   /** Texto alternativo de cada foto (SEO y lectores de pantalla) */
   alts?: string[];
   id?: string;
@@ -24,7 +26,7 @@ type Props = {
  * las mitades se abren y debajo aparece una composición fuera de grilla
  * (foto recortada + texto al costado montado sobre su borde).
  */
-export default function Cut({ before, after, caption, imgs, alts, id }: Props) {
+export default function Cut({ before, after, heading, caption, imgs, alts, id }: Props) {
   const root = useRef<HTMLElement>(null);
 
   // Centra la frase en el tajo usando la altura de mayúsculas real de la fuente.
@@ -96,9 +98,10 @@ export default function Cut({ before, after, caption, imgs, alts, id }: Props) {
         ))}
         <div className="cut-copy">
           <h2 className="cut-after">
+            {heading && <span className="sr-only">{heading} </span>}
             {after.split(" ").map((w, i) => (
               <span className="w" key={i}>
-                <span>{w}</span>
+                <span>{w}</span>{" "}
               </span>
             ))}
           </h2>

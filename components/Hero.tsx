@@ -80,25 +80,27 @@ export default function Hero() {
       <div className="hero-shade" />
 
       <div className="hero-content">
-        <h1 className="sr-only">Gitano Studio · Barbería de autor en Mérida, Yucatán</h1>
         <div className="hero-copy">
-          <p className="hero-kicker mono">Barbería de autor · Mérida, Yuc.</p>
+          <h1 className="hero-kicker mono">Barbería de autor en Mérida, Yucatán</h1>
           <p className="display hero-title" aria-hidden>
             {LINES.map((l) => (
               <span className={`line ${l.hit ? "is-hit" : ""}`} key={l.text}>
-                <span className="fit">{l.text}</span>
+                <span className="fit">{l.text}</span>{" "}
               </span>
             ))}
+          </p>
+          <p className="hero-sub">
+            Fades, tijera y navaja con tiempo para el detalle. Dayner atiende una cabeza a la vez en la Calle 31 de México Oriente. Sin fila, sin prisa, sin cortes de catálogo.
           </p>
         </div>
 
         <div className="hero-meta">
-          <p className="hero-where mono">Mar–Dom · Calle 31, Mérida</p>
+          <p className="hero-where mono">Martes a domingo · Solo con cita</p>
           <a href={FRESHA_URL} target="_blank" rel="noopener" className="pill">
-            Agendar <Chevron />
+            Aparta tu lugar <Chevron />
           </a>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="pill pill-ghost">
-            WhatsApp <Chevron />
+            Escríbenos por WhatsApp <Chevron />
           </a>
         </div>
       </div>

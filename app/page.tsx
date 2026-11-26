@@ -7,48 +7,13 @@ import Artist from "@/components/Artist";
 import Menu from "@/components/Menu";
 import Faq from "@/components/Faq";
 import Visit from "@/components/Visit";
-import { ADDRESS, FAQS, GEO, HOURS, INSTAGRAM_URL, MAPS_URL } from "@/lib/data";
+import { HERO_IMG } from "@/lib/data";
+import { businessLd, faqLd } from "@/lib/seo";
 
-// Datos estructurados para Google (negocio local).
-const DAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const hhmm = (h: number) => `${String(Math.floor(h)).padStart(2, "0")}:${h % 1 ? "30" : "00"}`;
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BarberShop",
-  name: "Gitano Studio",
-  description: "Barbería de autor en Mérida, Yucatán.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: ADDRESS.line1,
-    addressLocality: "Mérida",
-    addressRegion: "Yucatán",
-    addressCountry: "MX",
-  },
-  geo: { "@type": "GeoCoordinates", latitude: GEO.lat, longitude: GEO.lng },
-  hasMap: MAPS_URL,
-  openingHoursSpecification: Object.entries(HOURS)
-    .filter(([, h]) => h)
-    .map(([d, h]) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: DAY[Number(d)],
-      opens: hhmm(h![0]),
-      closes: hhmm(h![1]),
-    })),
-  priceRange: "$80–$650 MXN",
-  founder: { "@type": "Person", name: "Dayner", jobTitle: "Barbero" },
-  sameAs: [INSTAGRAM_URL],
-};
+const SITE = "https://gitanostudio-3nr7.vercel.app"; // TODO: dominio propio antes de lanzar
 
-// FAQPage: mismo texto que la sección visible (components/Faq.tsx), como pide Google.
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQS.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+// Datos estructurados (HairSalon + FAQPage), armados en lib/seo.ts desde lib/data.ts.
+const jsonLd = businessLd({ url: SITE, image: `${SITE}${HERO_IMG}` });
 
 export default function Home() {
   return (
@@ -62,8 +27,12 @@ export default function Home() {
         <Hero />
         <Cut
           before="no es un corte."
-          after="es una pieza."
-          caption={["Tijera, navaja y paciencia.", "Una cabeza a la vez, con tiempo para el detalle."]}
+          heading="Esto no es un corte."
+          after="Es una pieza."
+          caption={[
+            "Tijera, navaja y paciencia. Aquí no hay turno exprés: antes de cortar, Dayner lee la forma de tu cabeza, tu tipo de cabello y cómo te peinas en la vida real, no en la foto.",
+            "Sales con un corte que te queda a ti, y que se sigue viendo bien tres semanas después.",
+          ]}
           imgs={[
             "/img/cut/gitano-studio-crop-fade-barba-linea-merida.webp",
             "/img/cut/gitano-studio-taper-fade-rizado-merida.webp",

@@ -3,15 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { BIO } from "@/lib/data";
 
 gsap.registerPlugin(ScrollTrigger);
-
-// TODO: bio en borrador; que Dayner confirme datos (trayectoria, formación).
-const BIO = [
-  "Dayner es barbero y fundador de Gitano Studio, una barbería de autor en Mérida, Yucatán. Su trabajo une la técnica clásica de tijera y navaja con una lectura de estilo actual: cortes personalizados, corte especializado a tijera, diseño y arreglo de barba y corte corto femenino.",
-  "Cada cita empieza con una asesoría: forma de la cabeza, tipo de cabello, rutina y lo que quieres proyectar. Con eso diseña un corte pensado para ti y te explica cómo peinarlo y qué productos usar en casa.",
-  "El estudio está en la Calle 31, Circuito Colonias, en la colonia México Oriente. Atiende con cita de martes a domingo, y la Experiencia Gitano suma barba, toalla caliente y tratamiento facial al corte.",
-];
 
 export default function Artist() {
   const root = useRef<HTMLElement>(null);
@@ -92,9 +86,12 @@ export default function Artist() {
         </div>
 
         <div className="bio">
-          <h2 className="display display-5 artist-title">Dayner</h2>
-          <p className="mono bio-kicker">Barbero y fundador · Gitano Studio</p>
-          <h3 className="bio-lead">Barbería de autor en Mérida, Yucatán.</h3>
+          <p className="display display-5 artist-title" aria-hidden>
+            Dayner
+          </p>
+          <p className="mono bio-kicker">Barbero · Fundador · Gitano Studio · Mérida</p>
+          <h2 className="bio-h2">Dayner, barbero y fundador de Gitano Studio</h2>
+          <p className="bio-lead">Técnica clásica, lectura actual.</p>
           {BIO.map((p) => (
             <p key={p.slice(0, 20)}>{p}</p>
           ))}
