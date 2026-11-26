@@ -12,7 +12,7 @@ const LINKS = [
 ];
 
 /**
- * Navbar fijo: transparente sobre la foto del hero, oscuro con blur al bajar.
+ * Navbar fijo sin fondo, en modo inversión (mix-blend difference): se lee sobre cualquier sección.
  * En celular los links se esconden detrás de un botón "Menú" que abre una capa a pantalla completa.
  */
 export function Header() {
