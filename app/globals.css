@@ -368,3 +368,5 @@ h1.hero-kicker { font-size: var(--t-1); }
 .faq-no::before { content: attr(data-no); } /* el número no entra en el texto del H3 */
 .menu-item-name small.mono { text-transform: none; letter-spacing: 0; font-family: var(--f-sans); font-size: 14px; } /* descripciones largas: legibles */
 .footer-row .footer-info span { white-space: normal; } /* textos de pie más largos: que bajen de renglón */
+.visit-kicker { color: var(--muted); margin-bottom: 18px; }
+.arrow-out { display: inline-block; width: .7em; height: .7em; margin-left: .25em; vertical-align: .05em; }

@@ -107,7 +107,6 @@ export default function Collection() {
     <section ref={root} className="collection" id="obra">
       <div className="collection-head">
         <h2 className="display collection-title">Cortes de autor en Mérida</h2>
-        <p className="collection-sub">Fades, texturas, rizos y barba. Así se ve el oficio cuando nadie tiene prisa.</p>
       </div>
 
       <div ref={grid} className="collection-grid">

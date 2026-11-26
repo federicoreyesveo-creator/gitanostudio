@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ADDRESS, ENTITY, FRESHA_URL, HOURS, INSTAGRAM_URL, MAPS_EMBED, MAPS_URL, WHATSAPP_URL } from "@/lib/data";
-import { Chevron, Marquee } from "./Ui";
+import { ArrowOut, Chevron, Marquee } from "./Ui";
 
 const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 const fmt = (h: number) => `${Math.floor(h)}:${h % 1 ? "30" : "00"}`;
@@ -47,14 +47,14 @@ export default function Visit() {
   return (
     <section className="visit" id="visita">
       <Marquee items={[(status?.text ?? "Mar–Sáb 10:00–19:30").toUpperCase(), "CALLE 31", "MÉRIDA"]} />
-      <p className="display display-5 visit-title" aria-hidden>
-        Visita
-      </p>
+      <div className="visit-title">
+        <p className="mono visit-kicker">Visita · Gitano Studio, Mérida</p>
+        <h2 className="display display-5">Calle 31, México Oriente.</h2>
+      </div>
 
       <div className="visit-grid">
         <div>
-          <h2 className="lead">Visita Gitano Studio en la Calle 31, México Oriente</h2>
-          <p className="visit-body">Calle 31, Circuito Colonias, México Oriente, Mérida, Yuc. Llegas con cita, sales con oficio.</p>
+          <p className="lead">Calle 31, Circuito Colonias, México Oriente, Mérida, Yuc.</p>
           {status && (
             <p className={`status mono ${status.open ? "is-open" : ""}`}>
               <i /> {status.text}
@@ -75,18 +75,13 @@ export default function Visit() {
         </dl>
 
         <div className="visit-actions">
-          <address className="mono">
-            {ADDRESS.line1}
-            <br />
-            {ADDRESS.line2}
-          </address>
           <a href={FRESHA_URL} target="_blank" rel="noopener" className="pill">
             Aparta tu lugar <Chevron />
           </a>
           <div className="visit-links mono">
-            <a href={MAPS_URL} target="_blank" rel="noopener">Cómo llegar ↗</a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp ↗</a>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener">Instagram ↗</a>
+            <a href={MAPS_URL} target="_blank" rel="noopener">Cómo llegar <ArrowOut /></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp <ArrowOut /></a>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener">Instagram <ArrowOut /></a>
           </div>
         </div>
       </div>
