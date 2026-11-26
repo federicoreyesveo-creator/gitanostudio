@@ -89,7 +89,7 @@ export default function Loader() {
     // Ventana del medio, en coordenadas de pantalla (para abrirla después sobre la foto de portada).
     const win = () => {
       const r = q(".ld-frame")[0].getBoundingClientRect();
-      return `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px)`;
+      return [r.top, innerWidth - r.right, innerHeight - r.bottom, r.left];
     };
 
     let alive = true;
@@ -117,12 +117,17 @@ export default function Loader() {
     // Último corte → la foto de portada en la misma ventana → la ventana se abre a pantalla completa.
     const open = () => {
       shot = SHOTS.length;
-      const hero = q(".ld-hero")[0];
+      const hero = q(".ld-hero")[0] as HTMLElement;
+      // La ventana crece pareja hacia los cuatro lados, desde el centro.
+      const from = win();
+      const grow = { p: 0 };
+      const clip = () => (hero.style.clipPath = `inset(${from.map((v) => `${(v * (1 - grow.p)).toFixed(2)}px`).join(" ")})`);
+      clip();
       gsap
         .timeline({ onComplete: () => setGone(true) })
-        .set(hero, { clipPath: win(), visibility: "visible" })
+        .set(hero, { visibility: "visible" })
         .set(q(".ld-frame"), { visibility: "hidden" })
-        .to(hero, { clipPath: "inset(0px 0px 0px 0px)", duration: 1.05, ease: "expo.inOut" }, "+=0.28")
+        .to(grow, { p: 1, duration: 1.05, ease: "expo.inOut", onUpdate: clip }, "+=0.28")
         .to(q(".ld-logo, .ld-count, .ld-place"), { opacity: 0, duration: 0.35, ease: "power2.in" }, "<")
         .call(finish, [], "<0.75") // la portada arranca cuando la ventana ya casi llenó la pantalla
         .to(el, { opacity: 0, duration: 0.35, ease: "power1.out" });
