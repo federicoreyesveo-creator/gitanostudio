@@ -103,18 +103,20 @@ export default function Visit() {
           <img src="/img/carita.png" alt="Gitano Studio" width={684} height={642} />
         </div>
         <p className="footer-entity">{ENTITY}</p>
+        {/* Dos columnas: el estudio a la izquierda, el horario a la derecha. El crédito cierra, centrado. */}
         <div className="footer-row mono">
-          {/* En desktop los tres datos van en fila; en celular, apilados a la izquierda con el crédito a la derecha. */}
-          <div className="footer-info">
+          <div className="footer-col">
             <span>Gitano Studio · Barbería de autor en Mérida, Yucatán</span>
-            <span>Mar–Sáb 10:00–19:30 · Dom 12:00–18:00</span>
-            <span>Estado del Arte</span>
             <span>© 2026</span>
           </div>
-          <a href="https://www.almabruta.studio" target="_blank" rel="noopener" className="footer-credit">
-            Diseñado por Alma Bruta
-          </a>
+          <div className="footer-col footer-col-r">
+            <span>Mar–Sáb 10:00–19:30</span>
+            <span>Dom 12:00–18:00</span>
+          </div>
         </div>
+        <a href="https://www.almabruta.studio" target="_blank" rel="noopener" className="mono footer-credit">
+          Diseñado por Alma Bruta
+        </a>
       </footer>
     </section>
   );

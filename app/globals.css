@@ -423,3 +423,25 @@ h1.hero-kicker { font-size: var(--t-1); }
 @keyframes ld-safety { to { opacity: 0; visibility: hidden; } }
 @media (max-width: 640px) { .ld-place { display: none; } .ld-frame { width: 52vw; } }
 @media (max-width: 640px) { .ld-hero img { object-position: 36% center; } }
+
+/* Portada en celular/tablet: la foto arriba (la cara libre) y el texto abajo, sobre negro.
+   La foto se funde con el negro para que no quede un corte duro. */
+@media (max-width: 900px) {
+  .hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; }
+  .hero-img-wrap { position: relative; inset: auto; flex: none; height: 54svh; overflow: hidden; }
+  .hero-shade { inset: 0 0 auto 0; height: 54svh; background: linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 62%, var(--ink) 100%); }
+  .hero-content { position: relative; left: auto; right: auto; bottom: auto; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; margin-top: -9svh; padding: 0 var(--gutter) 28px; }
+  .hero-meta { margin-top: 22px; }
+  /* Loader: la ventana y la foto final van donde queda la foto de la portada */
+  .ld-hero { bottom: auto; height: 54svh; }
+  .ld-frame, .ld-logo { top: 27svh; }
+}
+
+/* Footer: texto de marca centrado, dos columnas (estudio / horario) y el crédito al final, centrado */
+.footer-entity { margin: 0 auto 29px; max-width: 34em; text-align: center; }
+.footer-row { display: grid !important; grid-template-columns: 1fr 1fr; align-items: start; gap: 18px; }
+.footer-col { display: flex; flex-direction: column; gap: 4px; }
+.footer-col span { white-space: normal !important; }
+.footer-col-r { text-align: right; }
+.footer-credit { display: table; margin: 47px auto 0; }
+@media (max-width: 900px) { .ld-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 62%, var(--ink) 100%); } } /* igual que la portada */

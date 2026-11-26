@@ -87,9 +87,11 @@ export default function Loader() {
     show(0);
 
     // Ventana del medio, en coordenadas de pantalla (para abrirla después sobre la foto de portada).
+    // (relativa a la caja de la foto final: en celular esa caja es solo la parte de arriba).
     const win = () => {
       const r = q(".ld-frame")[0].getBoundingClientRect();
-      return [r.top, innerWidth - r.right, innerHeight - r.bottom, r.left];
+      const h = q(".ld-hero")[0].getBoundingClientRect();
+      return [r.top - h.top, h.right - r.right, h.bottom - r.bottom, r.left - h.left].map((v) => Math.max(0, v));
     };
 
     let alive = true;
